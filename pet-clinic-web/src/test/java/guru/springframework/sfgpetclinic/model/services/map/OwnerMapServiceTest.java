@@ -14,12 +14,12 @@ class OwnerMapServiceTest {
     OwnerMapService ownerMapService;
     Long num = 33L;
     @BeforeEach
-    void setUp() {
-        ownerMapService = new OwnerMapService(new PetTypeMapService(), new PetMapService());
-        Owner owner = new Owner();
-        owner.setId(num);
-        ownerMapService.save(owner);
-    }
+//    void setUp() {
+//        ownerMapService = new OwnerMapService(new PetTypeMapService(), new PetMapService());
+//        Owner owner = new Owner();
+//        owner.setId(num);
+//        ownerMapService.save(owner);
+//    }
 
     @Test
     void findAll() {

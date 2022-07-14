@@ -2,13 +2,16 @@ package guru.springframework.sfgpetclinic.model.services.map;
 
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Pet;
+import guru.springframework.sfgpetclinic.model.repositories.OwnerRepository;
 import guru.springframework.sfgpetclinic.model.services.OwnerService;
 import guru.springframework.sfgpetclinic.model.services.PetService;
 import guru.springframework.sfgpetclinic.model.services.PetTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,10 +21,12 @@ public class OwnerMapService extends AbstractMapService<Owner,Long> implements O
 
     private final PetTypeService petTypeService;
     private final PetService petService;
+    private final OwnerRepository ownerRepository;
 
-    public OwnerMapService(PetTypeService petTypeService, PetService petService) {
+    public OwnerMapService(PetTypeService petTypeService, PetService petService,OwnerRepository ownerRepository) {
         this.petTypeService = petTypeService;
         this.petService = petService;
+        this.ownerRepository = ownerRepository;
     }
 
     @Override
@@ -83,4 +88,11 @@ public class OwnerMapService extends AbstractMapService<Owner,Long> implements O
     public void constructed() {
         System.out.println("I was constructed! OwnerServiceMap");
     }
+
+    @Override
+    public List<Owner> findAllByLastNameLike(String lastName) {
+
+        return ownerRepository.findAllByLastNameLike(lastName);
+    }
+
 }
