@@ -12,7 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -51,28 +53,19 @@ class OwnerControllerTest {
     @Test
     void listOwners() throws Exception {
 
-        when(ownerService.findAll()).thenReturn(owners);
+        when(ownerService.findAllByLastNameLike("%%")).thenReturn(List.of(Owner.builder().build(),Owner.builder().build()));
         mockMvc.perform(get("/owners"))
                 .andExpect(status().is(200)).andDo(print())
-                .andExpect(view().name("owners/index"))
-                .andExpect(model().attribute("owners",hasSize(2)));
+                .andExpect(view().name("owners/ownersList"))
+                .andExpect(model().attribute("selections",hasSize(2)));
     }
 
-    @Test
-    void listOwnersByIndex() throws Exception {
-
-        when(ownerService.findAll()).thenReturn(owners);
-        mockMvc.perform(get("/owners/index"))
-                .andExpect(status().is(200)).andDo(print())
-                .andExpect(view().name("owners/index"))
-                .andExpect(model().attribute("owners",hasSize(2)));
-    }
 
     @Test
     void findOwners() throws Exception {
         mockMvc.perform(get("/owners/find"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("notimplemented"));
+                .andExpect(view().name("owners/findOwners"));
         verifyZeroInteractions(ownerService);
     }
 

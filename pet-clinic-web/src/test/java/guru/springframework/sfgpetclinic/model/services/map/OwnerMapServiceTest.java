@@ -1,9 +1,11 @@
 package guru.springframework.sfgpetclinic.model.services.map;
 
 import guru.springframework.sfgpetclinic.model.Owner;
+import guru.springframework.sfgpetclinic.model.repositories.OwnerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,12 +16,77 @@ class OwnerMapServiceTest {
     OwnerMapService ownerMapService;
     Long num = 33L;
     @BeforeEach
-//    void setUp() {
-//        ownerMapService = new OwnerMapService(new PetTypeMapService(), new PetMapService());
-//        Owner owner = new Owner();
-//        owner.setId(num);
-//        ownerMapService.save(owner);
-//    }
+    void setUp() {
+        ownerMapService = new OwnerMapService(new PetTypeMapService(), new PetMapService(), new OwnerRepository() {
+            @Override
+            public Owner findByLastName(String lastName) {
+                return null;
+            }
+
+            @Override
+            public List<Owner> findAllByLastNameLike(String lastName) {
+                return null;
+            }
+
+            @Override
+            public <S extends Owner> S save(S s) {
+                return null;
+            }
+
+            @Override
+            public <S extends Owner> Iterable<S> saveAll(Iterable<S> iterable) {
+                return null;
+            }
+
+            @Override
+            public Optional<Owner> findById(Long aLong) {
+                return Optional.empty();
+            }
+
+            @Override
+            public boolean existsById(Long aLong) {
+                return false;
+            }
+
+            @Override
+            public Iterable<Owner> findAll() {
+                return null;
+            }
+
+            @Override
+            public Iterable<Owner> findAllById(Iterable<Long> iterable) {
+                return null;
+            }
+
+            @Override
+            public long count() {
+                return 0;
+            }
+
+            @Override
+            public void deleteById(Long aLong) {
+
+            }
+
+            @Override
+            public void delete(Owner owner) {
+
+            }
+
+            @Override
+            public void deleteAll(Iterable<? extends Owner> iterable) {
+
+            }
+
+            @Override
+            public void deleteAll() {
+
+            }
+        });
+        Owner owner = new Owner();
+        owner.setId(num);
+        ownerMapService.save(owner);
+    }
 
     @Test
     void findAll() {
